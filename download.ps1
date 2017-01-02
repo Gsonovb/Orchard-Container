@@ -18,7 +18,7 @@ Expand-Archive -Path $filename -DestinationPath $expdir  -Force
 
 $mdir = Join-Path $expdir $movedir;
 Write-Host "Move Files $expdir to $desdir .";
-robocopy "$expdir" "$desdir" /E 
+robocopy "$mdir" "$desdir" /E 
 
 Write-Host "Delete Files $expdir .";
 Remove-Item $expdir  -Recurse -Force; 
