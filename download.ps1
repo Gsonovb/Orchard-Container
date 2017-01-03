@@ -20,8 +20,22 @@ $mdir = Join-Path $expdir $movedir;
 Write-Host "Move Files $expdir to $desdir .";
 robocopy "$mdir" "$desdir" /E 
 
-Write-Host "Delete Files $expdir .";
+
+
+Write-Host "Granting authority  ";
+icacls.exe c:\inetpub\wwwroot\App_data /T /grant IIS_IUSRS:M
+icacls.exe c:\inetpub\wwwroot\Media /T /grant IIS_IUSRS:M
+
+
+Write-Host "Delete Temp Files $expdir .";
 Remove-Item $expdir  -Recurse -Force; 
-Write-Host "Delete Files $filename .";
+Write-Host "Delete Download File $filename .";
 Remove-Item $filename -Force;
+
+if($args[0] -ne "debug")
+{
+    Write-Host "Delete script ";
+    remove-item $MyInvocation.MyCommand.Path -force    
+}
+
 Write-Host "Done.";
